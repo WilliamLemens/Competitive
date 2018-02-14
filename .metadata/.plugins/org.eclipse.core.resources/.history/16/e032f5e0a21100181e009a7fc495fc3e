@@ -1,0 +1,10 @@
+package a3;
+
+public class p598D {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+	}
+
+}
