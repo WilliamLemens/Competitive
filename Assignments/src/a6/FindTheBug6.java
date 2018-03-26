@@ -1,7 +1,7 @@
 package a6;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 /**
  * Problem statement here: http://codeforces.com/problemset/problem/706/C
@@ -24,14 +24,14 @@ public class FindTheBug6 {
         words = new String[n];
         reversed = new String[n];
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             energy[i] = scan.nextInt();
+        }
 
         for (int i = 0; i < n; i++) {
             words[i] = scan.next();
             reversed[i] = new StringBuilder(words[i]).reverse().toString();
         }
-        
         scan.close();
     }
 
@@ -48,21 +48,21 @@ public class FindTheBug6 {
         dp[n - 1][1] = energy[n - 1];
 
         // For every index, for every possible flip of the last two
-        for (int i = n - 2; i >= 0; i--)
-            for (int k = 0; k < 2; k++)
+        for (int i = n - 2; i >= 0; i--) {
+            for (int k = 0; k < 2; k++) {
                 for (int l = 0; l < 2; l++) {
                     String cur = k > 0 ? reversed[i] : words[i];
                     String next = l > 0 ? reversed[i + 1] : words[i + 1];
+
                     // cur <= next
-                    if (cur.compareTo(next) <= 0) {
+                    if (dp[i+1][l] != -1 && cur.compareTo(next) <= 0) {
                         long cost = dp[i + 1][l] + (k > 0 ? energy[i] : 0);
 
                         dp[i][k] = dp[i][k] == -1 ? cost : Math.min(dp[i][k], cost);
-                        System.out.printf("cur: %s <= next: %s, %d\n",cur,next,cost);
                     }
-                    else
-                    	System.out.printf("cur: %s > next: %s\n",cur,next);
                 }
+            }
+        }
 
         if (dp[0][0] == -1) {
             System.out.println(dp[0][1]);
