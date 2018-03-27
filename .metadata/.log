@@ -5367,3 +5367,8 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2018-03-27 10:54:50.733
 !MESSAGE Cannot run program "git" (in directory "\usr\bin"): CreateProcess error=2, The system cannot find the file specified
+
+!ENTRY org.eclipse.core.resources 2 2 2018-03-27 11:00:02.239
+!MESSAGE Save operation warnings.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2018-03-27 11:00:02.239
+!MESSAGE The project description file (.project) for 'sf' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
