@@ -23,10 +23,10 @@ public class FindTheBug8 {
      */
     public static long fastExp(long base, long exp) {
         if (exp == 1) return base;
-        long ans = fastExp(base * base, exp / 2);
+        long ans = fastExp((base%MOD) * (base%MOD), exp / 2); // added these two mods
 
         if (exp % 2 == 1) {
-            ans = (base * ans) % MOD;
+            ans = (base%MOD) * (ans%MOD) % MOD; // and the first two mods here
         }
 
         return ans;
