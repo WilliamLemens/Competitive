@@ -1,5 +1,5 @@
 # Competitive
-###Simple repo for my competitive programming course.
+### Simple repo for my competitive programming course.
 
 All assignments are in `/Assignments/src/` just so it works nicely with Eclipse.
 
