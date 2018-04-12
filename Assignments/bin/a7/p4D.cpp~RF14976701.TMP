@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Envelope { int w, h, max, prev, n; };
+
+int main() {
+// READ IN
+    int N, W, H, n = 0;
+    scanf("%d %d %d", &N, &W, &H);
+    Envelope envs[N];
+    for (n = 0; n < N; n++) {
+        scanf("%d %d", &envs[n].w, &envs[n].h);
+        envs[n].max = envs[n].w > W && envs[n].h > H ? 1 : 0;
+    }
+// CHECK
+    printf("%d %d %d\n", N, W, H);
+    for (n = 0; n < N; n++)
+        printf("%d %d\n", w[n], h[n]);
+// DO LOGIC
+
+}
