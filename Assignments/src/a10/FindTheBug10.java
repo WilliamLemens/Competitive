@@ -27,7 +27,7 @@ public class FindTheBug10 {
                 int mid = (l + r) / 2;
 
                 this.left = new SegmentTreeNode(arr, l, mid);
-                this.right = new SegmentTreeNode(arr, mid + 1, r);
+                this.right = new SegmentTreeNode(arr, mid+1, r);
                 this.val = left.val * right.val;
             }
         }
@@ -74,7 +74,7 @@ public class FindTheBug10 {
             st = new StringTokenizer(br.readLine());
 
             for (int i = 0; i < n; ++i) {
-                arr[i] = Integer.parseInt(st.nextToken());
+                arr[i] = SegmentTreeNode.getSign(Integer.parseInt(st.nextToken()));
             }
 
             SegmentTreeNode root = new SegmentTreeNode(arr, 0, n - 1);
@@ -88,7 +88,7 @@ public class FindTheBug10 {
                 int b = Integer.parseInt(st.nextToken());
 
                 if (type == 'C') {
-                    root.update(a - 1, b);
+                    root.update(a - 1, SegmentTreeNode.getSign(b));
                 } else {
                     int result = root.query(a - 1, b - 1);
                     if (result == 0) {
