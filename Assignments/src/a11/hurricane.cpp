@@ -3,9 +3,11 @@
 using namespace std;
 
 struct Edge { int u, v, c, f; };
+
 struct Vertex {
     std::vector<Edge> E;
 };
+
 struct Graph {
     int n, m;
     std::vector<Vertex> V;
@@ -20,15 +22,19 @@ struct Graph {
     }
     void addEdge(int u, int v, int c, int f) {
         m++;
-        V[u].E.push_back({u, v, c, f});
+        bool contains = false;
+        for (int i = 0; i < V[u].E.size(); i++)
+            if (V[u].E[i].v == v) {
+                contains = true;
+                break;
+            }
+        if (!contains)
+            V[u].E.push_back({u, v, c, f});
     }
-    void addEdge(Edge e) {
-        m++;
-        V[e.u].E.push_back({e.u, e.v, e.c, e.f});
-    }
+    void addEdge(Edge e) { addEdge(e.u, e.v, e.c, e.f); }
 };
 
-bool BFS(Graph G, int s, int t, int parent[]) {
+bool BFS(Graph G, int s, int t, Edge parent[]) {
     bool visited[G.n];
     memset(visited, 0, sizeof(visited));
 
@@ -46,7 +52,7 @@ bool BFS(Graph G, int s, int t, int parent[]) {
             if (!visited[v]) {
                 visited[v] = true;
                 q.push(v);
-                parent[v] = u;
+                parent[v] = G.V[u].E[i];
             }
         }
     }
@@ -60,16 +66,48 @@ int edmonds_karp(Graph G, int s, int t) {
         for (int j = 0; j < G.V[i].E.size(); j++) {
             G.V[i].E[j].f = 0;
             R.addEdge(G.V[i].E[j]);
+            R.addEdge(G.V[i].E[j].v, G.V[i].E[j].u, G.V[i].E[j].c, 0);
         }
-    int parent[R.n];
+    Edge parent[R.n];
     int max_flow = 0;
     while (BFS(R, s, t, parent)) {
         int path_flow = INT_MAX;
         for (v = t; v != s; v = parent[v]) {
-            
+            u = parent[v].u;
+            path_flow = min(path_flow, parent[v].f);
         }
+        for (v = t; v != s; v = parent[v]) {
+            u = parent[v].u;
+            parent[v].f -= path_flow;
+            for (int i = 0; i < R.V[v].E.size(); i++) {
+                if (R.V[v].E[i].v == u) {
+                    
+                }
+            }
+        }
+        math_flow += path_flow;
+/*
+        int path_flow = INT_MAX;
+        for (v=t; v!=s; v=parent[v])
+        {
+            u = parent[v];
+            path_flow = min(path_flow, rGraph[u][v]);
+        }
+ 
+        // update residual capacities of the edges and reverse edges
+        // along the path
+        for (v=t; v != s; v=parent[v])
+        {
+            u = parent[v];
+            rGraph[u][v] -= path_flow;
+            rGraph[v][u] += path_flow;
+        }
+ 
+        // Add path flow to overall flow
+        max_flow += path_flow;
+*/
     }
-    return -1;
+    return max_flow;
 }
 
 int main() {
@@ -89,6 +127,7 @@ int main() {
             scanf("%d", &H);
             G.addEdge({H, 0, INT_MAX, 0});
         }
+        /*
         // CHECK READ
         printf("%d %d %d %d %d\n", N, M, S, P, H);
         for (int n = 0; n < N+1; n++) {
@@ -96,6 +135,7 @@ int main() {
             for (int i = 0; i < G.V[n].E.size(); i++)
                 printf("    %d %d %d\n", G.V[n].E[i].u, G.V[n].E[i].v, G.V[n].E[i].c);
         }
+        */
         // FEED TO EDMONDS-KARP'S
         int maxSaved = edmonds_karp(G, S, 0);
         // OUTPUT
